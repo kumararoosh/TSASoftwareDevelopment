@@ -10,7 +10,7 @@ void printf(char* str)
 }
 extern "C" void kernelMain(void* multiboot_structure, unsigned int magicnumber)
 {
-    printf("Hello World! --- http://www.google.com");
+    printf("Hello World! --- http://www.google.com .. part 2");
     
     while(1);
 }
