@@ -12,6 +12,8 @@
 #include <gui/window.h>
 #include <multitasking.h>
 
+#include <drivers/amd_am79c973.h>
+
 
 // #define GRAPHICSMODE
 
@@ -69,6 +71,19 @@ void printfHex(uint8_t key)
     foo[1] = hex[key & 0xF];
     printf(foo);
 }
+void printfHex16(uint16_t key)
+{
+    printfHex((key >> 8) & 0xFF);
+    printfHex( key & 0xFF);
+}
+void printfHex32(uint32_t key)
+{
+    printfHex((key >> 24) & 0xFF);
+    printfHex((key >> 16) & 0xFF);
+    printfHex((key >> 8) & 0xFF);
+    printfHex( key & 0xFF);
+}
+
 
 
 
@@ -175,7 +190,7 @@ extern "C" void kernelMain(const void* multiboot_structure, uint32_t /*multiboot
     printfHex(((size_t)allocated >> 8 ) & 0xFF);
     printfHex(((size_t)allocated      ) & 0xFF);
     printf("\n");
-    
+        
     TaskManager taskManager;
     /*
     Task task1(&gdt, taskA);
@@ -229,6 +244,11 @@ extern "C" void kernelMain(const void* multiboot_structure, uint32_t /*multiboot
         desktop.AddChild(&win2);
     #endif
 
+        
+
+    amd_am79c973* eth0 = (amd_am79c973*)(drvManager.drivers[2]);
+    eth0->Send((uint8_t*)"Hello Network", 13);
+        
 
     interrupts.Activate();
     
