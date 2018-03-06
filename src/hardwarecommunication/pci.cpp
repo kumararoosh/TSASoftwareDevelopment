@@ -1,6 +1,6 @@
 #include <hardwarecommunication/pci.h>
 #include <drivers/amd_am79c973.h>
-
+#include <memorymanagement.h>
 using namespace myos::common;
 using namespace myos::drivers;
 using namespace myos::hardwarecommunication;
